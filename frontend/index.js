@@ -4,7 +4,16 @@ function moduleProject3() {
 
   function buildNav(links) {
     //  ✨ do your magic here
-    return document.createElement('nav')
+    const contatiner = document.createElement('nav')
+    links.forEach( link => {
+      let a = document.createElement('a')
+      a.href = link.href
+      a.title = link.title
+      a.textContent = link.textContent
+      contatiner.appendChild(a)
+    })
+
+    return contatiner
   }
 
   // ❗ DOM creation using your `buildNav` component (do not change):
@@ -20,6 +29,34 @@ function moduleProject3() {
 
   function buildLearnerCard(learner, languages) {
     //  ✨ do your magic here
+    const card = document.createElement('div')
+    card.classList.add('learner-card')
+
+    const nameP = document.createElement('p')
+    nameP.textContent = learner.fullName
+
+    const dobP = document.createElement('p')
+    dobP.textContent = `Date of Birth: ${learner.dateOfBirth}`
+    
+    const idP = document.createElement('p')
+    idP.textContent = `Date of Birth: ${learner.id}`
+
+    const favLanguageP = document.createElement('p')
+    const favLanguage = languages.find(lang => lang.id === learner.favLanguage)
+    favLanguageP.textContent = `Favorite Language: ${learner.favLanguage.name}`; 
+
+    [nameP, dobP, favLanguageP, idP].forEach(p => {
+      card.appendChild(p)
+    })
+
+    card.addEventListener('click', evt => {
+      document.querySelectorAll('.learner-card').forEach(card => {
+        card.classList.remove('active')
+      })
+      card.classList.add('active')
+    })
+
+    return card
   }
 
   {
@@ -40,13 +77,41 @@ function moduleProject3() {
       { id: 17, fullName: 'Daniel Castillo', dateOfBirth: '1995-11-05', favLanguage: 12 }
     ]
     //  ✨ do your magic here
+    learners.forEach(learner => {
+      const learnerCard = buildLearnerCard(learner, languages)
+      document.querySelector('section').appendChild(learnerCard)
+    })
   }
 
   // 👉 TASK 3 - Write a `buildFooter` component that returns a footer
 
   function buildFooter(footerData) {
-    //  ✨ do your magic here
-    return document.createElement('footer')
+    //  ✨ do your magic here 
+    const footer =  document.createElement('footer')
+
+    let companyInfoDiv = document.createElement('div')
+    companyInfoDiv.classList.add('company-info')
+
+    let companyNameP = document.createElement('p')
+    companyNameP.classList.add('company-name')
+    companyNameP.textContent = footerData.companyName
+
+    let addressP = document.createElement('p')
+    addressP.classList.add('address')
+    addressP.textContent = footerData.address
+
+    let contactEmailP = document.createElement('p')
+    contactEmailP.classList.add('contact-email')
+    contactEmailP.innerHTML = `Email: <a href="mailto:${footerData.contactEmail}"> ${footerData.contactEmail}</a>`
+
+    companyInfoDiv.appendChild(companyNameP)
+    companyInfoDiv.appendChild(addressP)
+    companyInfoDiv.appendChild(contactEmailP)
+
+    footer.appendChild(companyInfoDiv)
+
+    return footer
+
   }
 
   // ❗ DOM creation using your `buildFooter` component (do not change):
